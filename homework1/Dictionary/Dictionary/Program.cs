@@ -1,6 +1,6 @@
 ﻿const string Exit = "exit";
 const char Space = ' ';
-const string path = @"..\..\..\dictionary.txt";
+const string Path = @"..\..\..\dictionary.txt";
 
 string? FindByValue(string value, Dictionary<string, string> dictionary)
 {
@@ -16,7 +16,7 @@ string? FindByValue(string value, Dictionary<string, string> dictionary)
 
 Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
-using (StreamReader reader = new StreamReader(path))
+using (StreamReader reader = new StreamReader(Path))
 {
     string line;
     while ((line = reader.ReadLine()) != null)

@@ -1,40 +1,35 @@
-﻿const string READ_PRODUCT = "Введите название товара: ";
-const string READ_COUNT = "Введите кол-во товара: ";
-const string FAILURE_READ_COUNT = "Невалидное число товара!";
-const string READ_NAME = "Введите ваше имя: ";
-const string READ_ADDRESS = "Введите адрес: ";
-const string YES = "y";
-const string FAILURE_DELIVERY = "Заказ отменен.";
-const int DELIVERY_TIME = 3;
+﻿const string Yes = "y";
+const int DeliveryTime = 3;
 
-Console.Write(READ_PRODUCT);
-string product = Console.ReadLine();
+Console.Write("Введите название товара: ");
+string? product = Console.ReadLine();
 
-Console.Write(READ_COUNT);
-var countString = Console.ReadLine();
+Console.Write("Введите кол-во товара: ");
+string? countString = Console.ReadLine();
 bool isCount = int.TryParse(countString, out int count);
 if (!isCount)
 {
-    Console.WriteLine(FAILURE_READ_COUNT);
+    Console.WriteLine("Невалидное число товара!");
     return;
 }
 
-Console.Write(READ_NAME);
-string name = Console.ReadLine();
+Console.Write("Введите ваше имя: ");
+string? name = Console.ReadLine();
 
-Console.Write(READ_ADDRESS);
-string address = Console.ReadLine();
+Console.Write("Введите адрес: ");
+string? address = Console.ReadLine();
 
 Console.WriteLine($"Здравствуйте, {name}, вы заказали {count} {product} на адрес {address}, все верно? (y/n)");
-var yes = Console.ReadLine();
-if (yes != YES)
+string? confirmationInput = Console.ReadLine();
+if (confirmationInput != Yes)
 {
-    Console.WriteLine(FAILURE_DELIVERY);
+    Console.WriteLine("Заказ отменен.");
     return;
 }
+
 Console.WriteLine($"{name}!");
 Console.WriteLine($"Ваш заказ {product} в количестве {count} оформлен!");
 
 DateTime todaysDate = DateTime.Today;
-DateTime dateOfDelivery = todaysDate.AddDays(DELIVERY_TIME);
+DateTime dateOfDelivery = todaysDate.AddDays(DeliveryTime);
 Console.WriteLine($"Ожидайте доставку по адресу {address} к {dateOfDelivery}");

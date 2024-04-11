@@ -1,7 +1,6 @@
-﻿using System.Reflection;
-
-const string Exit = "exit";
+﻿const string Exit = "exit";
 const char Space = ' ';
+const string path = @"..\..\..\dictionary.txt";
 
 string? FindByValue(string value, Dictionary<string, string> dictionary)
 {
@@ -16,8 +15,6 @@ string? FindByValue(string value, Dictionary<string, string> dictionary)
 }
 
 Dictionary<string, string> dictionary = new Dictionary<string, string>();
-
-var path = @"..\..\..\dictionary.txt";
 
 using (StreamReader reader = new StreamReader(path))
 {

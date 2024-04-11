@@ -1,61 +1,59 @@
-﻿const string BALANCE = "Your balance: ";
-const string READ_BET = "Введите ставку (введите exit для выхода): ";
-const string EXIT = "exit";
-const string GOODBYE = "До свидания!";
-const string NOT_VALID_VALUE = "Было введено невалидное значение, попробуйте еще раз!";
-const string NOT_VALID_BET = "Невозможно сделать такую ставку, попробуйте еще раз!";
-const string LOSE = "Вы проиграли!";
-const string WIN = "Вы выиграли!";
-const int MIN_NUMBER = 1;
-const int MAX_NUMBER = 20;
-const int MIN_NUMBER_WIN = 17;
-const int MAX_NUMBER_WIN = 21;
-const int MULTIPLICATOR = 2;
+﻿const string Exit = "exit";
+const int MinNumber = 1;
+const int MaxNumber = 20;
+const int MinNumberForWin = 17;
+const int MaxNumberForWin = 21;
+const int Multiplicator = 2;
 
 int balance = 10000;
-Random random = new Random();
-string betString;
+Random random = new();
+string? betString;
 
 while (true)
 {
     Console.Clear();
-    Console.WriteLine(BALANCE + balance);
-    Console.Write(READ_BET);
-    betString = Console.ReadLine();
-    if (betString == EXIT)
+    Console.WriteLine($"Ваш текущий баланс: {balance}");
+    if (balance <= 0)
     {
-        Console.WriteLine(GOODBYE);
+        Console.WriteLine("Вам больше не на что делать ставки, игра для вас закончилась(");
         return;
     }
 
-    bool result = int.TryParse(betString, out var bet);
-    if (!result)
+    Console.Write("Введите ставку (введите exit для выхода): ");
+    betString = Console.ReadLine();
+    if (betString == Exit)
     {
-        Console.WriteLine(NOT_VALID_VALUE);
+        Console.WriteLine("До свидания!");
+        return;
+    }
+
+    if (!int.TryParse(betString, out var bet))
+    {
+        Console.WriteLine("Было введено невалидное значение, попробуйте еще раз!");
         Console.ReadKey();
         continue;
     }
 
     if (bet < 0 || bet > balance)
     {
-        Console.WriteLine(NOT_VALID_BET);
+        Console.WriteLine("Невозможно сделать такую ставку, попробуйте еще раз!");
         Console.ReadKey();
         continue;
     }
 
-    int randomNumber = random.Next(MIN_NUMBER, MAX_NUMBER);
+    int randomNumber = random.Next(MinNumber, MaxNumber);
 
-    bool win = (randomNumber < MAX_NUMBER_WIN && randomNumber > MIN_NUMBER_WIN);
-    if (!win)
+    bool isWinner = (randomNumber is < MaxNumberForWin and > MinNumberForWin);
+    if (!isWinner)
     {
-        Console.WriteLine(LOSE);
+        Console.WriteLine("Вы проиграли!");
         Console.ReadKey();
         balance -= bet;
     }
     else
     {
-        Console.WriteLine(WIN);
+        Console.WriteLine("Вы выиграли!");
         Console.ReadKey();
-        balance += bet * (1 + (MULTIPLICATOR * randomNumber % MIN_NUMBER_WIN));
+        balance += bet * (1 + (Multiplicator * randomNumber % MaxNumberForWin));
     }
 }

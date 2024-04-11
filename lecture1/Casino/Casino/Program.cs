@@ -7,7 +7,6 @@ const int Multiplicator = 2;
 
 int balance = 10000;
 Random random = new();
-string? betString;
 
 while (true)
 {
@@ -20,7 +19,7 @@ while (true)
     }
 
     Console.Write("Введите ставку (введите exit для выхода): ");
-    betString = Console.ReadLine();
+    string? betString = Console.ReadLine();
     if (betString == Exit)
     {
         Console.WriteLine("До свидания!");

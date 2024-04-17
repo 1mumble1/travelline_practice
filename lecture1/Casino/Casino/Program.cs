@@ -1,8 +1,7 @@
 ﻿const string Exit = "exit";
 const int MinNumber = 1;
-const int MaxNumber = 20;
+const int MaxNumber = 21;
 const int MinNumberForWin = 17;
-const int MaxNumberForWin = 21;
 const int Multiplicator = 2;
 
 int balance = 10000;
@@ -42,7 +41,7 @@ while (true)
 
     int randomNumber = random.Next(MinNumber, MaxNumber);
 
-    bool isWinner = (randomNumber is < MaxNumberForWin and > MinNumberForWin);
+    bool isWinner = (randomNumber > MinNumberForWin);
     if (!isWinner)
     {
         Console.WriteLine("Вы проиграли!");
@@ -53,6 +52,6 @@ while (true)
     {
         Console.WriteLine("Вы выиграли!");
         Console.ReadKey();
-        balance += bet * (1 + (Multiplicator * randomNumber % MaxNumberForWin));
+        balance += bet * (1 + (Multiplicator * randomNumber % MinNumberForWin));
     }
 }

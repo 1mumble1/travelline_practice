@@ -3,11 +3,15 @@ const int DeliveryTime = 3;
 
 Console.Write("Введите название товара: ");
 string? product = Console.ReadLine();
+if (product == null)
+{
+    Console.WriteLine("Название товара не может быть пустым!");
+    return;
+}
 
 Console.Write("Введите кол-во товара: ");
 string? countString = Console.ReadLine();
-bool isCount = int.TryParse(countString, out int count);
-if (!isCount)
+if (!int.TryParse(countString, out int count))
 {
     Console.WriteLine("Невалидное число товара!");
     return;

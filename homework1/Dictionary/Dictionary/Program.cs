@@ -2,23 +2,11 @@
 const char Space = ' ';
 const string Path = @"..\..\..\dictionary.txt";
 
-string? FindByValue(string value, Dictionary<string, string> dictionary)
-{
-    foreach (KeyValuePair<string, string> pair in dictionary)
-    {
-        if (dictionary[pair.Key] == value)
-        {
-            return pair.Key;
-        }
-    }
-    return null;
-}
-
-Dictionary<string, string> dictionary = new Dictionary<string, string>();
+Dictionary<string, string> dictionary = new();
 
 using (StreamReader reader = new StreamReader(Path))
 {
-    string line;
+    string? line;
     while ((line = reader.ReadLine()) != null)
     {
         string[] words = line.Split(new char[] { Space }, StringSplitOptions.RemoveEmptyEntries);

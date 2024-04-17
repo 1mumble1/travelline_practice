@@ -1,37 +1,19 @@
-﻿const string FAILURE_READ_DICTIONARY = "Ошибка чтения из словаря следующей строки: ";
-const string IGNORE_LINE = "Чтение будет продолжено дальше, строка проигнорирована";
-const string READ_WORD = "Введите слово для поиска перевода в словаре (введите exit для выхода): ";
-const string DICTIONARY_IS_EMPTY = "Словарь пуст: не удастся найти перевод. До свидания!";
-const string NOT_FOUND = "Слово не было найдено.";
-const string GOODBYE = "До свидания!";
-const string FILE_NAME = @"C:\MRT47\dict.txt";
-const string EXIT = "exit";
-const char SPACE = ' ';
+﻿const string Exit = "exit";
+const char Space = ' ';
+const string Path = @"..\..\..\dictionary.txt";
 
-string? FindByValue(string value, Dictionary<string, string> dictionary)
+Dictionary<string, string> dictionary = new();
+
+using (StreamReader reader = new StreamReader(Path))
 {
-    foreach (KeyValuePair<string, string> pair in dictionary)
-    {
-        if (dictionary[pair.Key] == value)
-        {
-            return pair.Key;
-        }
-    }
-    return null;
-}
-
-Dictionary<string, string> dictionary = new Dictionary<string, string>();
-
-using (StreamReader reader = new StreamReader(FILE_NAME))
-{
-    string line;
+    string? line;
     while ((line = reader.ReadLine()) != null)
     {
-        string[] words = line.Split(new char[] { SPACE }, StringSplitOptions.RemoveEmptyEntries);
+        string[] words = line.Split(new char[] { Space }, StringSplitOptions.RemoveEmptyEntries);
         if (words.Length != 2)
         {
-            Console.WriteLine(FAILURE_READ_DICTIONARY + line);
-            Console.WriteLine(IGNORE_LINE);
+            Console.WriteLine($"Ошибка чтения из словаря следующей строки: {line}");
+            Console.WriteLine("Чтение будет продолжено дальше, строка проигнорирована");
             Console.ReadKey();
             continue;
         }
@@ -43,39 +25,38 @@ using (StreamReader reader = new StreamReader(FILE_NAME))
 
 if (dictionary.Count < 0)
 {
-    Console.WriteLine(DICTIONARY_IS_EMPTY);
+    Console.WriteLine("Словарь пуст: не удастся найти перевод.До свидания!");
     return;
 }
 
 while (true)
 {
     Console.Clear();
-    Console.Write(READ_WORD);
-    string word = Console.ReadLine();
+    Console.Write("Введите слово для поиска перевода в словаре (введите exit для выхода): ");
+    string? word = Console.ReadLine();
 
-    if (word == EXIT)
+    if (word == Exit || word == null)
     {
-        Console.Write(GOODBYE);
+        Console.WriteLine("До свидания!");
         return;
     }
 
-    string translate;
-    bool existKey = dictionary.TryGetValue(word, out translate);
-    if (existKey)
+    string? translate = dictionary.FirstOrDefault(pair => pair.Key == word).Value;
+    if (translate != null)
     {
-        Console.WriteLine(translate);
+        Console.WriteLine($"Перевод слова '{word}' с английского на русский: '{translate}'");
         Console.ReadKey();
         continue;
     }
 
-    bool existValue = dictionary.ContainsValue(word);
-    if (existValue)
+    translate = dictionary.FirstOrDefault(pair => pair.Value == word).Key;
+    if (translate != null)
     {
-        Console.WriteLine(FindByValue(word, dictionary));
+        Console.WriteLine($"Перевод слова '{word}' с русского на английский: '{translate}'");
         Console.ReadKey();
         continue;
     }
 
-    Console.WriteLine(NOT_FOUND);
+    Console.WriteLine($"Слово '{word}' не было найдено.");
     Console.ReadKey();
 }

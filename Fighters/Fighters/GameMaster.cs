@@ -6,7 +6,7 @@ public class GameMaster
 {
     private const string AddFighter = "add-fighter";
     private const string Play = "play";
-    private List<IFighter> fighters = new List<IFighter>();
+    private readonly List<IFighter> _fighters = [];
     public void CommandHandler()
     {
         while (true)
@@ -23,7 +23,7 @@ public class GameMaster
 
             if (commandInput == Play)
             {
-                if (fighters.Count < 2)
+                if (_fighters.Count < 2)
                 {
                     Console.WriteLine("Вы создали недостаточно бойцов для игры!");
                     continue;
@@ -37,14 +37,14 @@ public class GameMaster
             if (commandInput == AddFighter)
             {
                 IFighter fighter = FightersCreator.CreateFighter();
-                fighters.Add(fighter);
+                _fighters.Add(fighter);
                 continue;
             }
         }
     }
     public IFighter PlayAndGetWinner()
     {
-        List<IFighter> sortedFighters = fighters.OrderByDescending(fighter => fighter.Skill).ToList();
+        List<IFighter> sortedFighters = _fighters.OrderByDescending(fighter => fighter.Skill).ToList();
 
         int round = 1;
         while (true)

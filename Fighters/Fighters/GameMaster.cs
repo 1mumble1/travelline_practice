@@ -1,5 +1,4 @@
 ﻿using Fighters.Models.Fighters;
-using System.Diagnostics;
 
 namespace Fighters
 {
@@ -80,8 +79,6 @@ namespace Fighters
 
                 Console.WriteLine();
             }
-
-            throw new UnreachableException();
         }
 
         private bool FightAndCheckIfOpponentDead(IFighter roundOwner, IFighter opponent)

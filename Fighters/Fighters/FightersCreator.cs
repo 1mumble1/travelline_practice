@@ -11,11 +11,10 @@ namespace Fighters
         public static IFighter CreateFighter()
         {
             Console.WriteLine("Введите имя для бойца:");
-            string? name = Console.ReadLine();
-            while (name == null)
+            string? name;
+            while ((name = Console.ReadLine()) is null)
             {
                 Console.WriteLine("Невалидное имя для бойца, попробуйте еще раз");
-                name = Console.ReadLine();
             }
 
             IRace race = ChooseRace();

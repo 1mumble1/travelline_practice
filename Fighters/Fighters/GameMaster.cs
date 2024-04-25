@@ -52,11 +52,17 @@ public class GameMaster
             Console.WriteLine($"Раунд {round++}.");
             for (int i = 0; i < sortedFighters.Count; i++)
             {
-                int opponentNumber = Random.Shared.Next(0, sortedFighters.Count);
-                while (opponentNumber == i)
+                List<int> indexesOfAliveFighters = new();
+                for (int j = 0; j < sortedFighters.Count; j++)
                 {
-                    opponentNumber = Random.Shared.Next(0, sortedFighters.Count);
+                    if (j == i)
+                    {
+                        continue;
+                    }
+                    indexesOfAliveFighters.Add(j);
                 }
+
+                int opponentNumber = indexesOfAliveFighters[Random.Shared.Next(0, sortedFighters.Count - 1)];
 
                 IFighter roundOwner = sortedFighters[i];
                 IFighter opponent = sortedFighters[opponentNumber];

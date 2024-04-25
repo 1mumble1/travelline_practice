@@ -15,7 +15,7 @@ namespace Fighters
                 Console.WriteLine("add-fighter - Добавить нового бойца на арену");
                 Console.WriteLine("play - Начать битву");
                 string? commandInput = Console.ReadLine();
-                if (commandInput == null || (commandInput != AddFighter && commandInput != Play))
+                if (commandInput is null || (commandInput != AddFighter && commandInput != Play))
                 {
                     Console.WriteLine("Неизвестная команда, попробуйте еще раз");
                     continue;

@@ -18,7 +18,9 @@ namespace Fighters.Models.Fighters
         public IClass Class { get; }
 
         public int Skill { get; }
+        public int MaxArmor { get; }
         public int CurrentArmor { get; }
+        public int Damage { get; }
 
         public void TakeDamage(int damage);
         public int CalculateDamage();

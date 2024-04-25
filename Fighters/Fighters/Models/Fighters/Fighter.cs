@@ -18,8 +18,12 @@ namespace Fighters.Models.Fighters
         public IClass Class { get; set; }
 
         public int Skill => Race.Skill + Class.Skill;
+
+        public int MaxArmor => Race.Armor + Armor.Armor;
         public int CurrentArmor { get; set; }
         
+        public int Damage => Race.Damage + Weapon.Damage + Class.Damage;
+
 
         public Fighter(string name, IRace race, IClass fighterClass, IWeapon weapon, IArmor armor)
         {
@@ -29,13 +33,13 @@ namespace Fighters.Models.Fighters
             Armor = armor;
             Class = fighterClass;
             CurrentHealth = MaxHealth;
-            CurrentArmor = Race.Armor + Armor.Armor;
+            CurrentArmor = MaxArmor;
         }
 
         public int CalculateDamage()
         {
             double damageMultiplicator = Random.Shared.Next(80, 111) / 100d;
-            double totalDamage = (Race.Damage + Weapon.Damage + Class.Damage) * damageMultiplicator;
+            double totalDamage = (Damage) * damageMultiplicator;
 
             // critical damage with 5% probability
             if (Random.Shared.Next(0, 101) <= 5)

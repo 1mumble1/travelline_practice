@@ -22,7 +22,17 @@ public class FightersCreator
         IWeapon weapon = ChooseWeapon();
         IArmor armor = ChooseArmor();
 
-        return new Fighter(name, race, fighterClass, weapon, armor);
+        IFighter newFighter = new Fighter(name, race, fighterClass, weapon, armor);
+
+        Console.WriteLine($"Боец '{name}' был успешно добавлен!");
+        Console.WriteLine("Характеристики:");
+        Console.WriteLine($"     здоровье: {newFighter.MaxHealth}");
+        Console.WriteLine($"     броня: {newFighter.MaxArmor}");
+        Console.WriteLine($"     урон: {newFighter.Damage}");
+        Console.WriteLine($"     скилл: {newFighter.Skill}");
+        Console.WriteLine();
+
+        return newFighter;
     }
 
     private static IRace ChooseRace()

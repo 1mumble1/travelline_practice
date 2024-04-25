@@ -4,47 +4,9 @@ namespace Fighters;
 
 public class GameMaster
 {
-    private const string AddFighter = "add-fighter";
-    private const string Play = "play";
-    private readonly List<IFighter> _fighters = [];
-    public void CommandHandler()
+    public IFighter PlayAndGetWinner(IReadOnlyList<IFighter> fighters)
     {
-        while (true)
-        {
-            Console.WriteLine("Введите команду:");
-            Console.WriteLine("add-fighter - Добавить нового бойца на арену");
-            Console.WriteLine("play - Начать битву");
-            string? commandInput = Console.ReadLine();
-            if (commandInput is null || (commandInput != AddFighter && commandInput != Play))
-            {
-                Console.WriteLine("Неизвестная команда, попробуйте еще раз");
-                continue;
-            }
-
-            if (commandInput == Play)
-            {
-                if (_fighters.Count < 2)
-                {
-                    Console.WriteLine("Вы создали недостаточно бойцов для игры!");
-                    continue;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            if (commandInput == AddFighter)
-            {
-                IFighter fighter = FightersCreator.CreateFighter();
-                _fighters.Add(fighter);
-                continue;
-            }
-        }
-    }
-    public IFighter PlayAndGetWinner()
-    {
-        List<IFighter> sortedFighters = _fighters.OrderByDescending(fighter => fighter.Skill).ToList();
+        List<IFighter> sortedFighters = fighters.OrderByDescending(fighter => fighter.Skill).ToList();
 
         int round = 1;
         while (true)

@@ -8,9 +8,9 @@ public class Program
     {
         Console.WriteLine("Добро пожаловать в игру Fighters!");
 
-        var master = new GameMaster();
-        master.CommandHandler();
-        IFighter winner = master.PlayAndGetWinner();
+        CommandHandler handler = new();
+        GameMaster master = new();
+        IFighter winner = master.PlayAndGetWinner(handler.GetFighters());
         Console.WriteLine($"Выигрывает {winner.Name}!");
     }
 }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Fighters.Models.Weapons;
 
 namespace Fighters.Models.Weapons
 {
-    public interface IWeapon
-    {
-        int Damage { get; }
-    }
+public interface IWeapon
+{
+    int Damage { get; }
+}
 }

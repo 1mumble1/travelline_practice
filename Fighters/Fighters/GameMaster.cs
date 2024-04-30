@@ -1,48 +1,31 @@
 ﻿using Fighters.Models.Fighters;
 using System.Diagnostics;
 
-namespace Fighters
+namespace Fighters;
+
+public class GameMaster
 {
-    public class GameMaster
+    public IFighter PlayAndGetWinner(IReadOnlyList<IFighter> fighters)
     {
-        private const string AddFighter = "add-fighter";
-        private const string Play = "play";
-        private List<IFighter> fighters = new List<IFighter>();
-        public void CommandHandler()
+        List<IFighter> sortedFighters = fighters.OrderByDescending(fighter => fighter.Skill).ToList();
+
+        int round = 1;
+        while (true)
         {
-            while (true)
+            Console.WriteLine($"Раунд {round++}.");
+            for (int i = 0; i < sortedFighters.Count; i++)
             {
-                Console.WriteLine("Введите команду:");
-                Console.WriteLine("add-fighter - Добавить нового бойца на арену");
-                Console.WriteLine("play - Начать битву");
-                string? commandInput = Console.ReadLine();
-                if (commandInput == null || (commandInput != AddFighter && commandInput != Play))
+                List<int> indexesOfAliveFighters = new();
+                for (int j = 0; j < sortedFighters.Count; j++)
                 {
-                    Console.WriteLine("Неизвестная команда, попробуйте еще раз");
-                    continue;
-                }
-
-                if (commandInput == Play)
-                {
-                    if (fighters.Count < 2)
+                    if (j == i)
                     {
-                        Console.WriteLine("Вы создали недостаточно бойцов для игры!");
-                        continue;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                if (commandInput == AddFighter)
-                {
                     IFighter fighter = FightersCreator.CreateFighter();
                     fighters.Add(fighter);
-                    continue;
+                        continue;
+                    }
+                    indexesOfAliveFighters.Add(j);
                 }
-            }
-        }
         public IFighter PlayAndGetWinner()
         {
             fighters.Sort(delegate(IFighter first, IFighter second)
@@ -50,50 +33,40 @@ namespace Fighters
                 return first.Skill.CompareTo(second.Skill);
             });
 
-            int round = 1;
-            while (true)
-            {
-                Console.WriteLine($"Раунд {round++}.");
-                for (int i = 0; i < fighters.Count; i++)
+                int opponentNumber = indexesOfAliveFighters[Random.Shared.Next(0, sortedFighters.Count - 1)];
+
+                IFighter roundOwner = sortedFighters[i];
+                IFighter opponent = sortedFighters[opponentNumber];
+
+                Console.WriteLine($"Боец {roundOwner.Name} атакует бойца {opponent.Name}");
+
+                if (FightAndCheckIfOpponentDead(roundOwner, opponent))
                 {
-                    int opponentNumber = Random.Shared.Next(0, fighters.Count);
-                    while (opponentNumber == i)
+                    Console.WriteLine($"Боец {opponent.Name} убит!");
+                    sortedFighters.Remove(opponent);
+                    if (sortedFighters.Count == 1)
                     {
-                        opponentNumber = Random.Shared.Next(0, fighters.Count);
-                    }
-
-                    IFighter roundOwner = fighters[i];
-                    IFighter opponent = fighters[opponentNumber];
-
-                    Console.WriteLine($"Боец {roundOwner.Name} атакует бойца {opponent.Name}");
-
-                    if (FightAndCheckIfOpponentDead(roundOwner, opponent))
-                    {
-                        Console.WriteLine($"Боец {opponent.Name} убит!");
-                        fighters.Remove(opponent);
-                        if (fighters.Count == 1)
-                        {
-                            return fighters[0];
-                        }
+                        return sortedFighters[0];
                     }
                 }
-
-                Console.WriteLine();
             }
 
+            Console.WriteLine();
+        }
+
             throw new UnreachableException();
-        }
-
-        private bool FightAndCheckIfOpponentDead(IFighter roundOwner, IFighter opponent)
-        {
-            int damage = roundOwner.CalculateDamage();
-            opponent.TakeDamage(damage);
-
-            Console.WriteLine(
-                $"Боец {opponent.Name} получает {damage} урона. " +
-                opponent.ToString());
-
-            return opponent.CurrentHealth < 1;
-        }
     }
+
+    private bool FightAndCheckIfOpponentDead(IFighter roundOwner, IFighter opponent)
+    {
+        int damage = roundOwner.CalculateDamage();
+        opponent.TakeDamage(damage);
+
+        Console.WriteLine(
+            $"Боец {opponent.Name} получает {damage} урона. " +
+            opponent.ToString());
+
+        return opponent.CurrentHealth < 1;
+    }
+}
 }

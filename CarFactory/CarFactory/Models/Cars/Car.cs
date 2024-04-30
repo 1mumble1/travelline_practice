@@ -8,14 +8,14 @@ namespace CarFactory.Models.Cars;
 
 public class Car : ICar
 {
-    public string Name { get; private set; }
+    public string Name { get; set; }
     public int MaxSpeed => Engine.MaxSpeed + Transmission.MaxSpeed;
     public int Gears => Transmission.Gears;
-    public IBodyShape BodyShape { get; private set; }
-    public IColor Color { get; private set; }
-    public IEngine Engine { get; private set; }
-    public ISuspension Suspension { get; private set;} 
-    public ITransmission Transmission { get; private set; }
+    public IBodyShape BodyShape { get; set; }
+    public IColor Color { get; set; }
+    public IEngine Engine { get; set; }
+    public ISuspension Suspension { get; set;} 
+    public ITransmission Transmission { get; set; }
 
     public Car (string name,
         IBodyShape bodyShape,

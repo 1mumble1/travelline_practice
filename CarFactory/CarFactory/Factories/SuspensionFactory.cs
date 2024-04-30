@@ -1,6 +1,6 @@
-﻿using CarFactory.Models.Engines;
+﻿using CarFactory.Models.Suspensions;
 
-namespace CarFactory.Models.Suspensions;
+namespace CarFactory.Factories;
 
 public static class SuspensionFactory
 {

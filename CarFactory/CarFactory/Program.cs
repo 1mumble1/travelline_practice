@@ -11,7 +11,7 @@ public class Program
         {
             Console.WriteLine("Давайте соберем для вас машину");
 
-            ICar car = CarMaker.CreateCar();
+            ICar car = CarFactory.Factories.CarFactory.CreateCar();
 
             Console.WriteLine("Характеристики вашей машины:");
             Console.WriteLine(car.ToString());

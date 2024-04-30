@@ -1,6 +1,6 @@
-﻿using CarFactory.Models.Suspensions;
+﻿using CarFactory.Models.Transmissions;
 
-namespace CarFactory.Models.Transmissions;
+namespace CarFactory.Factories;
 
 public static class TransmissionFactory
 {

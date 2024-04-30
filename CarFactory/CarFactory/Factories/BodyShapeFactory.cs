@@ -1,8 +1,10 @@
-﻿namespace CarFactory.Models.BodyShapes;
+﻿using CarFactory.Models.BodyShapes;
+
+namespace CarFactory.Factories;
 
 public static class BodyShapeFactory
 {
-    public static IBodyShape CreateBodyShape ()
+    public static IBodyShape CreateBodyShape()
     {
         Console.WriteLine("Выберите тип кузова для вашей машины:\n" +
             "1 - Седан\n" +

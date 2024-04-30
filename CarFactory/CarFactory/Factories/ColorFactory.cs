@@ -1,6 +1,6 @@
-﻿using CarFactory.Models.BodyShapes;
+﻿using CarFactory.Models.Colors;
 
-namespace CarFactory.Models.Colors;
+namespace CarFactory.Factories;
 
 public static class ColorFactory
 {

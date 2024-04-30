@@ -1,12 +1,13 @@
 ﻿using CarFactory.Models.BodyShapes;
+using CarFactory.Models.Cars;
 using CarFactory.Models.Colors;
 using CarFactory.Models.Engines;
 using CarFactory.Models.Suspensions;
 using CarFactory.Models.Transmissions;
 
-namespace CarFactory.Models.Cars;
+namespace CarFactory.Factories;
 
-public static class CarMaker
+public static class CarFactory
 {
     public static ICar CreateCar()
     {

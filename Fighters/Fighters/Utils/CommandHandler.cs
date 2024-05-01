@@ -1,6 +1,6 @@
 ﻿using Fighters.Models.Fighters;
 
-namespace Fighters;
+namespace Fighters.Utils;
 
 public class CommandHandler
 {
@@ -15,7 +15,7 @@ public class CommandHandler
             Console.WriteLine("add-fighter - Добавить нового бойца на арену");
             Console.WriteLine("play - Начать битву");
             string? commandInput = Console.ReadLine();
-            if (commandInput is null || (commandInput != AddFighter && commandInput != Play))
+            if (commandInput is null || commandInput != AddFighter && commandInput != Play)
             {
                 Console.WriteLine("Неизвестная команда, попробуйте еще раз");
                 continue;

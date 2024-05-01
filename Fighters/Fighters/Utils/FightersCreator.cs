@@ -4,7 +4,7 @@ using Fighters.Models.Races;
 using Fighters.Models.Weapons;
 using Fighters.Models.Classes;
 
-namespace Fighters;
+namespace Fighters.Utils;
 
 public class FightersCreator
 {
@@ -15,7 +15,7 @@ public class FightersCreator
         while ((name = Console.ReadLine()) is null)
         {
             Console.WriteLine("Невалидное имя для бойца, попробуйте еще раз");
-                name = Console.ReadLine();
+            name = Console.ReadLine();
         }
 
         IRace race = ChooseRace();

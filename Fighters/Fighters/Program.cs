@@ -16,4 +16,3 @@ public class Program
         Console.WriteLine($"Выигрывает {winner.Name}!");
     }
 }
-}

@@ -1,7 +1,5 @@
 ﻿namespace Fighters.Models.Races;
 
-namespace Fighters.Models.Races
-{
 public class Witcher : IRace
 {
     public int Damage => 20;
@@ -11,5 +9,4 @@ public class Witcher : IRace
     public int Armor => 0;
 
     public int Skill => 50;
-}
 }

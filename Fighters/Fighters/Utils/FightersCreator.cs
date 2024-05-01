@@ -15,7 +15,6 @@ public class FightersCreator
         while ((name = Console.ReadLine()) is null)
         {
             Console.WriteLine("Невалидное имя для бойца, попробуйте еще раз");
-            name = Console.ReadLine();
         }
 
         IRace race = ChooseRace();
@@ -116,5 +115,4 @@ public class FightersCreator
             return choice;
         }
     }
-}
 }

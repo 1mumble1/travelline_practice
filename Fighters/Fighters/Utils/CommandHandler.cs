@@ -7,6 +7,7 @@ public class CommandHandler
     private const string AddFighter = "add-fighter";
     private const string Play = "play";
     private readonly List<IFighter> _fighters = [];
+
     public IReadOnlyList<IFighter> GetFighters()
     {
         while (true)

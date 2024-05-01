@@ -18,9 +18,8 @@ public class Program
             Console.WriteLine(car.ToString());
 
             Console.WriteLine("Хотите собрать еще одну машину? (введите y для потверждения и любую клавишу для завершения)");
-            string? confirmationInput = Console.ReadLine();
             Console.Clear();
-            if (confirmationInput == Yes)
+            if (Console.ReadKey().Key == ConsoleKey.Y)
             {
                 continue;
             }

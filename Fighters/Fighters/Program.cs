@@ -1,5 +1,4 @@
 ﻿using Fighters.Models.Fighters;
-using Fighters.Models.Races;
 using Fighters.Utils;
 
 namespace Fighters;

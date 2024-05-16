@@ -1,5 +1,4 @@
 ﻿using Fighters.Models.Fighters;
-using System.Diagnostics;
 
 namespace Fighters.Utils;
 

@@ -8,19 +8,19 @@ namespace Fighters.Models.Fighters;
 public class Fighter : IFighter
 {
     public int MaxHealth => Race.Health + Class.Health;
-    public int CurrentHealth { get; set; }
+    public int CurrentHealth { get; private set; }
 
     public string Name { get; }
 
     public IRace Race { get; }
-    public IWeapon Weapon { get; set; }
-    public IArmor Armor { get; set; }
-    public IClass Class { get; set; }
+    public IWeapon Weapon { get; }
+    public IArmor Armor { get; }
+    public IClass Class { get; }
 
     public int Skill => Race.Skill + Class.Skill;
 
     public int MaxArmor => Race.Armor + Armor.Armor;
-    public int CurrentArmor { get; set; }
+    public int CurrentArmor { get; private set; }
     
     public int Damage => Race.Damage + Weapon.Damage + Class.Damage;
 

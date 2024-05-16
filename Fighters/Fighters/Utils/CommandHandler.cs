@@ -22,6 +22,13 @@ public class CommandHandler
                 continue;
             }
 
+            if (commandInput == AddFighter)
+            {
+                IFighter fighter = FightersCreator.CreateFighter();
+                _fighters.Add(fighter);
+                continue;
+            }
+
             if (commandInput == Play)
             {
                 if (_fighters.Count < 2)
@@ -33,13 +40,6 @@ public class CommandHandler
                 {
                     break;
                 }
-            }
-
-            if (commandInput == AddFighter)
-            {
-                IFighter fighter = FightersCreator.CreateFighter();
-                _fighters.Add(fighter);
-                continue;
             }
         }
 

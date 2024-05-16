@@ -18,11 +18,14 @@ public class Program
             Console.WriteLine(car.ToString());
 
             Console.WriteLine("Хотите собрать еще одну машину? (введите y для потверждения и любую клавишу для завершения)");
-            Console.Clear();
-            if (Console.ReadKey().Key == ConsoleKey.Y)
+            
+            if (Console.ReadLine()?.ToLower() == Yes)
             {
+                Console.Clear();
                 continue;
             }
+
+            Console.Clear();
 
             Console.WriteLine("До свидания!");
             break;

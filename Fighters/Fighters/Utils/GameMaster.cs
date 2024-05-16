@@ -23,9 +23,9 @@ public class GameMaster
                     }
                     indexesOfAliveFighters.Add(j);
                 }
+                int defenderIndex = indexesOfAliveFighters[Random.Shared.Next(0, indexesOfAliveFighters.Count)];
 
                 IFighter attacker = sortedFighters[i];
-                int defenderIndex = indexesOfAliveFighters[Random.Shared.Next(0, indexesOfAliveFighters.Count)];
                 IFighter defender = sortedFighters[defenderIndex];
 
                 Console.WriteLine($"Боец {attacker.Name} атакует бойца {defender.Name}");

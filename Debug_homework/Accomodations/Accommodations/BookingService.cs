@@ -23,12 +23,20 @@ public class BookingService : IBookingService
 
     public Booking Book(int userId, string categoryName, DateTime startDate, DateTime endDate, Currency currency)
     {
-        if (endDate < startDate)
+        // проверка на создание брони раньше, чем сегодня
+        if (startDate < DateTime.UtcNow)
         {
-            throw new ArgumentException("End date cannot be earlier than start date");
+            throw new ArgumentException("Start date cannot be earlier than now date.");
         }
 
-        RoomCategory? selectedCategory = _categories.FirstOrDefault(c => c.Name == categoryName);
+        // теперь нельзя создать бронь с одной и той же датой заезда и выезда
+        if (endDate <= startDate)
+        {
+            throw new ArgumentException("End date cannot be earlier or equal than start date");
+        }
+
+        // добавлено приведение к нижнему регистру, для удобства ввода команды юзером
+        RoomCategory? selectedCategory = _categories.FirstOrDefault(c => c.Name.ToLower() == categoryName.ToLower());
         if (selectedCategory == null)
         {
             throw new ArgumentException("Category not found");
@@ -101,7 +109,8 @@ public class BookingService : IBookingService
 
         query = query.Where(b => b.StartDate >= startDate);
 
-        query = query.Where(b => b.EndDate < endDate);
+        // поиск по фильтрам осуществляется включая граничные пределы, т.е. дата выезда тоже должна включаться при поиске
+        query = query.Where(b => b.EndDate <= endDate);
 
         if (!string.IsNullOrEmpty(categoryName))
         {
@@ -118,9 +127,14 @@ public class BookingService : IBookingService
             throw new ArgumentException("Start date cannot be earlier than now date");
         }
 
-        int daysBeforeArrival = (DateTime.Now - booking.StartDate).Days;
+        // нужно вычитать из даты заезда сегодняшнюю дату, а не наоборот
+        int daysBeforeArrival = (booking.StartDate - DateTime.Now).Days;
 
-        return 5000.0m / daysBeforeArrival;
+        // если осталось менее 1 дня до заезда, то не будет происходить деления на 0
+        // вывод штрафа в той же валюте, что и бронь
+        return daysBeforeArrival == 0 ?
+            5000.0m / GetCurrencyRate(booking.Currency) :
+            (5000.0m / daysBeforeArrival) / GetCurrencyRate(booking.Currency);
     }
 
     private static decimal GetCurrencyRate(Currency currency)
@@ -139,8 +153,9 @@ public class BookingService : IBookingService
 
     private static decimal CalculateBookingCost(decimal baseRate, int days, int userId, decimal currencyRate)
     {
-        decimal cost = baseRate * days;
-        decimal totalCost = cost - cost * CalculateDiscount(userId) * currencyRate;
+        // для корректного перевода в нужную валюту нужно поделить стоимость бронирования на текущий курс
+        decimal cost = baseRate * days / currencyRate;
+        decimal totalCost = cost - cost * CalculateDiscount(userId);
         return totalCost;
     }
 }
